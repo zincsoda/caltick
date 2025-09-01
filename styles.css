@@ -294,3 +294,7 @@ input:focus, select:focus, textarea:focus {
 .deficit-negative { 
   color: #f87171; 
 }
+
+.fat-burned { 
+  color: #22c55e; 
+}

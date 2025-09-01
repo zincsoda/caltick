@@ -42,6 +42,8 @@ export const elements = {
       get predictedDaily() { return $('predictedDaily'); },
     get projectedDeficit() { return $('projectedDeficit'); },
     get projectedHint() { return $('projectedHint'); },
+    get fatBurned() { return $('fatBurned'); },
+    get fatHint() { return $('fatHint'); },
     get sleepProgress() { return $('sleepProgress'); },
   get progressFill() { return $('progressFill'); },
   get progressLabelLeft() { return $('progressLabelLeft'); },
@@ -135,6 +137,7 @@ export function setUIInvalid() {
   elements.sleepProgress.textContent = '—';
   elements.predictedDaily.textContent = '—';
   elements.projectedDeficit.textContent = '—';
+  elements.fatBurned.textContent = '—';
   elements.progressFill.style.width = '0%';
   elements.progressLabelLeft.textContent = 'Since wake: —';
   elements.progressLabelRight.textContent = 'Goal awake: 7.5h';

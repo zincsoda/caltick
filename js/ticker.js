@@ -158,6 +158,21 @@ function updateProgressAndDailyPrediction(day, rmr, profile) {
     elements.projectedDeficit.classList.add('deficit-negative');
     elements.projectedHint.textContent = 'Projected surplus (food > burn)';
   }
+
+  // Calculate estimated fat burned (1 gram of fat = 9 calories)
+  const fatBurnedGrams = projectedDeficit > 0 ? projectedDeficit / 9 : 0;
+  elements.fatBurned.textContent = fatBurnedGrams.toFixed(1) + ' g';
+  
+  // Update fat hint and styling based on whether there's a deficit
+  if (projectedDeficit > 0) {
+    elements.fatHint.textContent = 'From calorie deficit';
+    elements.fatBurned.classList.add('fat-burned');
+    elements.fatBurned.classList.remove('deficit-negative');
+  } else {
+    elements.fatHint.textContent = 'No deficit (surplus)';
+    elements.fatBurned.classList.remove('fat-burned');
+    elements.fatBurned.classList.add('deficit-negative');
+  }
 }
 
 // Start the live ticker
