@@ -15,7 +15,8 @@
       </div>
     </header>
 
-    <div class="grid">
+    <div class="single-column">
+      <!-- Metrics Section -->
       <section class="card">
         <div class="section-title">Totals since bedtime</div>
 
@@ -86,11 +87,24 @@
 
         <div class="sep"></div>
 
+        <div class="section-title">Energy balance</div>
+        <div class="totals">
+          <div class="stat">
+            <div class="kicker">Net deficit (burn − eat)</div>
+            <div class="big" id="netDeficit">0 kcal</div>
+            <div class="rate" id="netHint">Positive = deficit, Negative = surplus</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activities Section -->
+      <section class="card">
         <div class="section-title">Logged activities</div>
         <div id="activityList" class="activities"></div>
+      </section>
 
-        <div class="sep"></div>
-
+      <!-- Food Section -->
+      <section class="card">
         <div class="section-title">Food intake</div>
         <div class="row">
           <div>
@@ -111,23 +125,9 @@
 
         <div class="section-title">Logged foods</div>
         <div id="foodList" class="foods"></div>
-
-        <div class="sep"></div>
-
-        <div class="section-title">Energy balance</div>
-        <div class="totals">
-          <div class="stat">
-            <div class="kicker">Net deficit (burn − eat)</div>
-            <div class="big" id="netDeficit">0 kcal</div>
-            <div class="rate" id="netHint">Positive = deficit, Negative = surplus</div>
-          </div>
-        </div>
-
-        <div class="footer">
-          Stored locally in your browser. Ticker updates continuously every animation frame.
-        </div>
       </section>
 
+      <!-- Profile & Settings Section -->
       <section class="card">
         <div class="section-title">Profile & Settings</div>
         
@@ -251,6 +251,11 @@
           sleep = sleepFactor × RMR; awake = activityFactor × RMR. Activities add on top.
         </p>
       </section>
+
+      <!-- Footer -->
+      <div class="footer">
+        Stored locally in your browser. Ticker updates continuously every animation frame.
+      </div>
     </div>
   </div>
 

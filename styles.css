@@ -78,16 +78,10 @@ h1 {
   box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
-.grid { 
-  display: grid; 
+.single-column { 
+  display: flex; 
+  flex-direction: column; 
   gap: 16px; 
-  grid-template-columns: 1fr; 
-}
-
-@media (min-width: 860px) { 
-  .grid { 
-    grid-template-columns: 1.2fr 1fr; 
-  } 
 }
 
 .section-title { 
