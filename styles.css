@@ -172,7 +172,7 @@ input:focus, select:focus, textarea:focus {
 .totals { 
   display: grid; 
   gap: 12px; 
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr 1fr; 
 }
 
 .stat { 
@@ -255,6 +255,9 @@ input:focus, select:focus, textarea:focus {
   .split { 
     grid-template-columns: 1fr; 
   } 
+  .totals {
+    grid-template-columns: 1fr;
+  }
 }
 
 .progress-card .bar {
