@@ -5,7 +5,7 @@ import { calcRMR_MSJ, calcCalorieRates, calcBackgroundCalories } from './calcula
 import { toKg, toCm, clamp, fmtKcal2, fmtH, fmtKcal0 } from './utils.js';
 import { validateSleepWindow, setUIInvalid } from './ui.js';
 import { getActivityCalories } from './activities.js';
-import { updateDeficitLive } from './foods.js';
+import { updateDeficitLive, getFoodCalories } from './foods.js';
 
 // Global state for live calculations
 export let rafId = null;
@@ -142,6 +142,22 @@ function updateProgressAndDailyPrediction(day, rmr, profile) {
 
   const predictedDailyTotal = sleepDaily + awakeDaily + totals.activity;
   elements.predictedDaily.textContent = fmtKcal0(predictedDailyTotal);
+
+  // Projected daily deficit (predicted burn - food intake)
+  const totalFood = getFoodCalories();
+  const projectedDeficit = predictedDailyTotal - totalFood;
+  elements.projectedDeficit.textContent = fmtKcal0(projectedDeficit);
+  
+  // Color code the projected deficit
+  if (projectedDeficit >= 0) {
+    elements.projectedDeficit.classList.remove('deficit-negative');
+    elements.projectedDeficit.classList.add('deficit-positive');
+    elements.projectedHint.textContent = 'Projected deficit (burn - food)';
+  } else {
+    elements.projectedDeficit.classList.remove('deficit-positive');
+    elements.projectedDeficit.classList.add('deficit-negative');
+    elements.projectedHint.textContent = 'Projected surplus (food > burn)';
+  }
 }
 
 // Start the live ticker

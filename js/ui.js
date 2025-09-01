@@ -40,6 +40,8 @@ export const elements = {
   get awakeRate() { return $('awakeRate'); },
   get nextSleepSummary() { return $('nextSleepSummary'); },
       get predictedDaily() { return $('predictedDaily'); },
+    get projectedDeficit() { return $('projectedDeficit'); },
+    get projectedHint() { return $('projectedHint'); },
     get sleepProgress() { return $('sleepProgress'); },
   get progressFill() { return $('progressFill'); },
   get progressLabelLeft() { return $('progressLabelLeft'); },
@@ -132,6 +134,7 @@ export function setUIInvalid() {
   elements.nextSleepSummary.textContent = '—';
   elements.sleepProgress.textContent = '—';
   elements.predictedDaily.textContent = '—';
+  elements.projectedDeficit.textContent = '—';
   elements.progressFill.style.width = '0%';
   elements.progressLabelLeft.textContent = 'Since wake: —';
   elements.progressLabelRight.textContent = 'Goal awake: 7.5h';
