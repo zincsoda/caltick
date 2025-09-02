@@ -6,6 +6,7 @@ import Sleep from './components/Sleep.jsx'
 import Activities from './components/Activities.jsx'
 import Foods from './components/Foods.jsx'
 import Ticker from './components/Ticker.jsx'
+import Metrics from './components/Metrics.jsx'
 
 function App() {
   const profile = readProfile() || DEFAULT_USER
@@ -23,6 +24,7 @@ function App() {
           <h1>Calorie Ticker</h1>
         </div>
       </header>
+      <Metrics profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
       <Profile onChange={() => {}} />
       <Sleep onChange={() => {}} />
       <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
