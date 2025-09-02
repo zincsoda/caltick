@@ -295,3 +295,15 @@ input:focus, select:focus, textarea:focus {
 .fat-burned { 
   color: #22c55e; 
 }
+
+/* Hide Energy Balance section */
+#netDeficit,
+#netHint {
+  display: none !important;
+}
+
+/* Hide the Energy Balance section title and its container */
+.card .section-title:nth-of-type(4),
+.card .section-title:nth-of-type(4) + .totals {
+  display: none !important;
+}
