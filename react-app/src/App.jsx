@@ -25,11 +25,11 @@ function App() {
         </div>
       </header>
       <Metrics profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
+      <Activities weightKg={weightKg} onChange={() => {}} />
+      <Foods onChange={() => {}} />
       <Profile onChange={() => {}} />
       <Sleep onChange={() => {}} />
       <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
-      <Activities weightKg={weightKg} onChange={() => {}} />
-      <Foods onChange={() => {}} />
       <div className="footer">React version – persisted locally</div>
     </div>
   )
