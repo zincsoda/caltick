@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bedtime → Wake → Next Sleep — Calorie Burn (with Food & Deficit)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <h1>Bedtime → Wake → Next Sleep — Calorie Burn</h1>
+      </div>
+    </header>
+
+    <div class="single-column">
+      <!-- Metrics Section -->
+      <section class="card">
+        <div class="section-title">Totals since bedtime</div>
+
+        <div class="totals">
+          <div class="stat">
+            <div class="kicker">Estimated total burned (live)</div>
+            <div class="big" id="totalCalories">0.00 kcal</div>
+            <div class="rate" id="totalRate">Rate: +0.0000 kcal/s</div>
+          </div>
+          <div class="stat">
+            <div class="kicker">From activities</div>
+            <div class="big" id="activityCalories">0.00 kcal</div>
+            <div class="rate" id="activityRate">Rate: +0.0000 kcal/s (logged totals)</div>
+          </div>
+          <div class="stat">
+            <div class="kicker">Predicted daily burn</div>
+            <div class="big" id="predictedDaily">0 kcal</div>
+            <div class="rate" id="predictedHint">24-hour projection</div>
+          </div>
+          <div class="stat">
+            <div class="kicker">Predicted daily deficit</div>
+            <div class="big" id="projectedDeficit">0 kcal</div>
+            <div class="rate" id="projectedHint">Burn - Food intake</div>
+          </div>
+          <div class="stat">
+            <div class="kicker">Estimated fat burned</div>
+            <div class="big" id="fatBurned">0.0 g</div>
+            <div class="rate" id="fatHint">From calorie deficit</div>
+          </div>
+          <div class="stat">
+            <div class="kicker">Total eaten since bedtime</div>
+            <div class="big" id="totalFood">0 kcal</div>
+            <div class="rate" id="foodCount">Items: 0</div>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="stat" style="margin-bottom:12px;">
+          <div class="kicker">Background breakdown</div>
+          <div id="bgBreakdown">Sleep: 0.00 kcal • Awake: 0.00 kcal</div>
+          <div class="split">
+            <div class="rate" id="sleepRate">Sleep rate: +0.0000 kcal/s</div>
+            <div class="rate" id="awakeRate">Awake rate: +0.0000 kcal/s</div>
+          </div>
+        </div>
+
+        <div class="section-title">Until next sleep</div>
+        <div class="card progress-card" style="padding:12px;">
+          <div class="split">
+            <div>
+              <div class="kicker">Time until next sleep</div>
+              <div id="nextSleepSummary" class="note">—</div>
+            </div>
+            <div>
+              <div class="kicker">Progress</div>
+              <div id="sleepProgress" class="note">—</div>
+            </div>
+          </div>
+          <div class="bar" style="margin-top:10px;">
+            <div id="progressFill" class="fill"></div>
+          </div>
+          <div class="progress-legend">
+            <span id="progressLabelLeft">Since wake: 0h</span>
+            <span id="progressLabelRight">Goal awake: 16h</span>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="section-title">Energy balance</div>
+        <div class="totals">
+          <div class="stat">
+            <div class="kicker">Net deficit (burn − eat)</div>
+            <div class="big" id="netDeficit">0 kcal</div>
+            <div class="rate" id="netHint">Positive = deficit, Negative = surplus</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Activities Section -->
+      <section class="card">
+        <div class="section-title">Log activity</div>
+        <div class="row-3">
+          <div>
+            <label>Activity</label>
+            <select id="activityType">
+              <option value="walking">Walking</option>
+              <option value="running">Running</option>
+              <option value="cycling">Cycling</option>
+              <option value="strength">Strength training</option>
+              <option value="hiit">HIIT</option>
+              <option value="swimming">Swimming</option>
+              <option value="yoga">Yoga</option>
+              <option value="custom">Custom (enter MET)</option>
+            </select>
+            <div class="hint">Pick an activity to log</div>
+          </div>
+          <div>
+            <label>Duration</label>
+            <div class="inline">
+              <input type="number" id="duration" min="1" step="1" placeholder="30">
+              <select id="durationUnit">
+                <option value="min">min</option>
+                <option value="hr">hr</option>
+              </select>
+            </div>
+            <div class="hint">How long you did it</div>
+          </div>
+          <div id="metWrap">
+            <label>Intensity (MET)</label>
+            <input type="number" id="met" min="1" step="0.1" placeholder="e.g., 3.5">
+            <div class="hint">If unsure, choose a preset (auto-fills)</div>
+          </div>
+        </div>
+
+        <div class="inline" style="margin-top:12px;">
+          <button class="btn" id="addActivity">Add activity</button>
+          <button class="btn secondary" id="resetDay">Reset activities</button>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="section-title">Logged activities</div>
+        <div id="activityList" class="activities"></div>
+      </section>
+
+      <!-- Food Section -->
+      <section class="card">
+        <div class="section-title">Food intake</div>
+        <div class="row">
+          <div>
+            <label>Food name (optional)</label>
+            <input type="text" id="foodName" placeholder="e.g., Oatmeal">
+          </div>
+          <div>
+            <label>Calories</label>
+            <input type="number" id="foodCalories" min="0" step="1" placeholder="e.g., 350">
+          </div>
+        </div>
+        <div class="inline" style="margin-top:12px;">
+          <button class="btn" id="addFood">Add food</button>
+          <button class="btn secondary" id="resetFood">Clear foods</button>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="section-title">Logged foods</div>
+        <div id="foodList" class="foods"></div>
+      </section>
+
+      <!-- Profile & Settings Section -->
+      <section class="card">
+        <div class="section-title">Profile & Settings</div>
+        
+        <div class="row-3">
+          <div>
+            <label>Age</label>
+            <input type="number" id="age" min="10" max="100" step="1" value="">
+          </div>
+          <div>
+            <label>Sex</label>
+            <select id="sex">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div>
+            <label>Height</label>
+            <div class="inline">
+              <input type="number" id="height" min="120" max="230" step="1" value="">
+              <select id="heightUnit">
+                <option value="cm">cm</option>
+                <option value="in">in</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row-3">
+          <div>
+            <label>Weight</label>
+            <div class="inline">
+              <input type="number" id="weight" min="35" max="300" step="1" value="">
+              <select id="weightUnit">
+                <option value="kg">kg</option>
+                <option value="lb">lb</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label>Activity Level</label>
+            <select id="activityFactor">
+              <!-- Options will be populated dynamically from config -->
+            </select>
+            <div class="hint">Select your activity level for more accurate calorie calculations</div>
+          </div>
+          <div>
+            <label>Sleep Factor</label>
+            <input type="number" id="sleepFactor" min="0.8" max="1.1" step="0.05" value="">
+            <div class="hint">Multiplier for sleep hours (0.95 = typical)</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Include RMR in calculations?</label>
+            <select id="includeRMR">
+              <option value="yes">Yes (recommended)</option>
+              <option value="no">No (activities only)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div class="section-title">Sleep Schedule</div>
+        <div class="row">
+          <div>
+            <label>Bedtime (last night)</label>
+            <input type="datetime-local" id="bedtime">
+          </div>
+          <div>
+            <label>Wake time (today)</label>
+            <input type="datetime-local" id="waketime">
+          </div>
+        </div>
+        <div id="sleepValidation" class="hint"></div>
+
+        <p class="note" style="margin-top:10px;">
+          Background calories are split into Sleep (bed → wake) and Awake (wake → now). Rates:
+          sleep = sleepFactor × RMR; awake = activityFactor × RMR. Activities add on top.
+        </p>
+      </section>
+
+      <!-- Footer -->
+      <div class="footer">
+        Stored locally in your browser. Ticker updates continuously every animation frame.
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript modules -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
