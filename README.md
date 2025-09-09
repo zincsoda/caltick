@@ -1,6 +1,6 @@
 # Calorie Ticker Webapp
 
-A modular, refactored calorie tracking web application that calculates calorie burn based on sleep/wake cycles, activities, and food intake.
+A modern React-based calorie tracking web application that calculates calorie burn based on sleep/wake cycles, activities, and food intake.
 
 ## Features
 
@@ -8,89 +8,131 @@ A modular, refactored calorie tracking web application that calculates calorie b
 - **Sleep cycle integration** - tracks calories burned during sleep vs. awake periods
 - **Activity logging** with MET-based calorie calculations
 - **Food intake tracking** with net deficit/surplus calculations
-- **Responsive design** with modern UI
+- **Responsive design** with modern React UI
 - **Local storage** for data persistence
-- **Modular architecture** for maintainability
+- **Component-based architecture** for maintainability
 
 ## Project Structure
 
 ```
 caltick/
-├── index.html          # Main HTML file
-├── styles.css          # All CSS styles
-├── js/                 # JavaScript modules
-│   ├── config.js       # Configuration constants and defaults
-│   ├── formDefaults.js # Form default value loader
-│   ├── utils.js        # Utility functions and helpers
-│   ├── calculations.js # Calorie and RMR calculations
-│   ├── storage.js      # Local storage management
-│   ├── ui.js          # UI management and DOM manipulation
-│   ├── activities.js   # Activity logging and management
-│   ├── foods.js        # Food logging and management
-│   ├── ticker.js       # Live ticker functionality
-│   └── main.js         # Main application coordination
-└── README.md           # This file
+├── react-app/              # Main React application
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   │   ├── Activities.jsx
+│   │   │   ├── Foods.jsx
+│   │   │   ├── Metrics.jsx
+│   │   │   ├── Profile.jsx
+│   │   │   ├── Sleep.jsx
+│   │   │   └── Ticker.jsx
+│   │   ├── lib/           # Shared utilities and logic
+│   │   │   ├── calculations.js
+│   │   │   ├── config.js
+│   │   │   ├── storage.js
+│   │   │   └── utils.js
+│   │   ├── App.jsx        # Main application component
+│   │   └── main.jsx       # Application entry point
+│   ├── package.json       # Dependencies and scripts
+│   └── vite.config.js     # Vite configuration
+├── legacy/                # Original vanilla JS version
+│   ├── index.html
+│   ├── styles.css
+│   └── js/               # Original JavaScript modules
+└── README.md
 ```
 
-## Module Descriptions
+## Getting Started
 
-### `config.js`
-- Default user settings (age: 44, sex: male, height: 178cm, weight: 102kg)
-- Activity factor presets (Sedentary, Lightly Active, etc.)
-- MET values for different activities
-- Storage keys and default sleep schedule (10:30 PM - 6:30 AM)
+### Prerequisites
 
-### `formDefaults.js`
-- Loads default values from config into HTML form elements
-- Dynamically populates activity factor dropdown
-- Ensures consistency between config and UI
+- Node.js (version 16 or higher)
+- npm or yarn
 
-### `utils.js`
-- DOM element selection helper (`$`)
-- Unit conversion functions (kg/lb, cm/in)
-- Date formatting and manipulation
-- Math utilities (clamp, formatting)
+### Installation
 
-### `calculations.js`
+1. Navigate to the React app directory:
+   ```bash
+   cd react-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The built files will be in the `dist/` directory.
+
+## React Components
+
+### `App.jsx`
+- Main application component that coordinates all other components
+- Manages state and data flow between components
+- Handles profile and daily data loading
+
+### `Ticker.jsx`
+- Real-time calorie burn display
+- Live updates showing current calorie burn rate
+- Progress tracking and daily predictions
+
+### `Metrics.jsx`
+- Displays key metrics and statistics
+- Shows activity calories, food calories, and net deficit/surplus
+- Provides visual feedback on daily progress
+
+### `Activities.jsx`
+- Activity logging and management
+- MET-based calorie calculations
+- Activity history and reset functionality
+
+### `Foods.jsx`
+- Food intake tracking
+- Calorie logging and management
+- Food history and reset functionality
+
+### `Profile.jsx`
+- User profile management
+- Personal information and settings
+- Activity level configuration
+
+### `Sleep.jsx`
+- Sleep schedule configuration
+- Bedtime and wake time settings
+- Sleep cycle integration
+
+## Shared Libraries
+
+### `lib/config.js`
+- Default user settings and configuration
+- Activity factor presets and MET values
+- Application constants
+
+### `lib/calculations.js`
 - RMR calculation using Mifflin-St Jeor equation
-- Activity calorie calculations
-- Background calorie rate calculations
+- Activity and background calorie calculations
 - Sleep/awake period calculations
 
-### `storage.js`
-- Local storage for user profile
-- Daily data persistence
+### `lib/storage.js`
+- Local storage management
+- Profile and daily data persistence
 - Data validation and fallbacks
 
-### `ui.js`
-- Centralized DOM element references
-- UI population functions
-- Form validation
-- Error state management
-
-### `activities.js`
-- Activity logging and management
-- Activity list rendering
-- MET value auto-filling
-- Activity reset functionality
-
-### `foods.js`
-- Food logging and management
-- Food list rendering
-- Calorie deficit calculations
-- Food reset functionality
-
-### `ticker.js`
-- Live calorie calculation engine
-- Real-time UI updates
-- Progress bar management
-- Daily prediction calculations
-
-### `main.js`
-- Application initialization
-- Event listener setup
-- Module coordination
-- Profile saving
+### `lib/utils.js`
+- Utility functions and helpers
+- Unit conversion functions
+- Date formatting and math utilities
 
 ## Default Configuration
 
@@ -102,41 +144,46 @@ The app comes pre-configured with:
 - **Activity Level**: Sedentary (1.2)
 - **Bedtime**: 10:30 PM
 - **Wake Time**: 6:30 AM
-- **Next Sleep**: Automatically calculated as 24 hours from bedtime
 
 ## Usage
 
-1. Open `index.html` in a modern web browser
-2. The app will load with your saved profile or default settings
-3. Adjust sleep times if needed
+1. The app loads with your saved profile or default settings
+2. Adjust your profile information if needed
+3. Set your sleep schedule
 4. Log activities and foods throughout the day
-5. Monitor real-time calorie burn and deficit
+5. Monitor real-time calorie burn and deficit via the ticker
 
 ## Technical Details
 
-- **ES6 Modules**: Uses modern JavaScript module system
+- **React 18**: Modern React with hooks and functional components
+- **Vite**: Fast build tool and development server
+- **ES6 Modules**: Modern JavaScript module system
 - **Local Storage**: All data stored locally in browser
-- **Real-time Updates**: Uses `requestAnimationFrame` for smooth ticker
+- **Real-time Updates**: Smooth ticker updates using React state
 - **Responsive Design**: CSS Grid and Flexbox for layout
-- **No Dependencies**: Pure vanilla JavaScript, HTML, and CSS
+- **ESLint**: Code linting and formatting
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Customizing Defaults
+
+To change the default values:
+1. Edit `src/lib/config.js` to modify the `DEFAULT_USER` object
+2. Update activity factor presets if needed
+3. The app will automatically use these new defaults
+
+## Legacy Version
+
+The original vanilla JavaScript version is preserved in the `legacy/` directory for reference. The React version maintains the same core functionality while providing a more maintainable and modern codebase.
 
 ## Browser Compatibility
 
 - Modern browsers with ES6 module support
 - Chrome 61+, Firefox 60+, Safari 10.1+, Edge 16+
-
-## Customizing Defaults
-
-To change the default values:
-1. Edit `js/config.js` to modify `DEFAULT_USER` object
-2. Update `ACTIVITY_FACTOR_PRESETS` if you want different activity levels
-3. The form will automatically load these new defaults on next page load
-4. No need to modify HTML - all values are loaded dynamically
-
-## Development
-
-To modify the app:
-1. Edit the appropriate module file
-2. Update configuration in `config.js` if needed
-3. Test changes in browser
-4. All modules are automatically imported and coordinated by `main.js`
