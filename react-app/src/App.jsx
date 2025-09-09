@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import './App.css'
 import { DEFAULT_USER } from './lib/config.js'
 import { readProfile, readDay } from './lib/storage.js'
@@ -9,27 +10,35 @@ import Ticker from './components/Ticker.jsx'
 import Metrics from './components/Metrics.jsx'
 
 function App() {
-  const profile = readProfile() || DEFAULT_USER
-  const day = readDay()
+  const [profile, setProfile] = useState(() => readProfile() || DEFAULT_USER)
+  const [day, setDay] = useState(() => readDay())
 
   const weightKg = profile.weightUnit === 'kg' ? profile.weight : profile.weight * 0.45359237
   const activitiesTotal = (day.activities || []).reduce((s, a) => s + (a.met * weightKg * (a.minutes / 60)), 0)
   const foodsTotal = (day.foods || []).reduce((s, f) => s + Number(f.calories || 0), 0)
+
+  const handleDayChange = (newDay) => {
+    setDay(newDay)
+  }
+
+  const handleProfileChange = (newProfile) => {
+    setProfile(newProfile)
+  }
 
   return (
     <div className="wrap single-column">
       <header>
         <div className="brand">
           <div className="logo" />
-          <h1>Calorie Ticker</h1>
+          <h1>Daily Burn Ticker</h1>
         </div>
       </header>
-      <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
       <Metrics profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
-      <Activities weightKg={weightKg} onChange={() => {}} />
-      <Foods onChange={() => {}} />
-      <Profile onChange={() => {}} />
-      <Sleep onChange={() => {}} />
+      <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
+      <Activities weightKg={weightKg} onChange={handleDayChange} />
+      <Foods onChange={handleDayChange} />
+      <Profile onChange={handleProfileChange} />
+      <Sleep onChange={handleDayChange} />
       <div className="footer">React version – persisted locally</div>
     </div>
   )
