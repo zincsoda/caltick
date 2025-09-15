@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { DEFAULT_USER } from './lib/config.js'
-import { readProfile, readDay } from './lib/storage.js'
+import { readProfile, readDay, saveDay } from './lib/storage.js'
 import Profile from './components/Profile.jsx'
 import Sleep from './components/Sleep.jsx'
 import Activities from './components/Activities.jsx'
@@ -19,6 +19,7 @@ function App() {
 
   const handleDayChange = (newDay) => {
     setDay(newDay)
+    saveDay(newDay)
   }
 
   const handleProfileChange = (newProfile) => {
@@ -34,11 +35,11 @@ function App() {
         </div>
       </header>
       <Metrics profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
-      <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} />
-      <Activities weightKg={weightKg} onChange={handleDayChange} />
-      <Foods onChange={handleDayChange} />
+      {/* <Ticker profile={profile} day={day} activityCalories={activitiesTotal} foodCalories={foodsTotal} /> */}
+      <Activities weightKg={weightKg} day={day} onChange={handleDayChange} />
+      <Foods day={day} onChange={handleDayChange} />
       <Profile onChange={handleProfileChange} />
-      <Sleep onChange={handleDayChange} />
+      <Sleep day={day} onChange={handleDayChange} />
       <div className="footer">React version – persisted locally</div>
     </div>
   )

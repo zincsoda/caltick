@@ -1,13 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
-import { readDay, saveDay } from '../lib/storage.js'
+import { useMemo, useState } from 'react'
 import { METS } from '../lib/config.js'
 import { calcActivityCalories } from '../lib/calculations.js'
 
-export default function Activities({ weightKg, onChange }) {
-  const [day, setDay] = useState(() => readDay())
+export default function Activities({ weightKg, day, onChange }) {
   const [form, setForm] = useState({ type: 'walking', met: METS.walking, minutes: 30 })
-
-  useEffect(() => { saveDay(day); onChange?.(day) }, [day, onChange])
 
   const total = useMemo(() => {
     return (day.activities || []).reduce((sum, a) => sum + calcActivityCalories(weightKg, a.met, a.minutes), 0)
@@ -15,13 +11,13 @@ export default function Activities({ weightKg, onChange }) {
 
   function addActivity() {
     const next = { ...day, activities: [...(day.activities || []), { ...form }] }
-    setDay(next)
+    onChange?.(next)
     setForm(f => ({ ...f, minutes: 30 }))
   }
 
   function removeActivity(idx) {
     const next = { ...day, activities: day.activities.filter((_, i) => i !== idx) }
-    setDay(next)
+    onChange?.(next)
   }
 
   return (

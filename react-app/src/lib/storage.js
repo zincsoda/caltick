@@ -39,6 +39,7 @@ export function readDay() {
     if (!('foods' in saved)) saved.foods = [];
     return saved;
   } catch (_error) {
+    console.error('Storage: Error reading day:', _error);
     const bed = lastNightDefaultBed();
     const wake = defaultWakeFromBed(bed.toISOString());
     return {

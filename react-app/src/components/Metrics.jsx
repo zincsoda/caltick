@@ -100,6 +100,12 @@ export default function Metrics({ profile, day, activityCalories = 0, foodCalori
         </div>
         
         <div className="stat">
+          <div className="kicker">TOTAL EATEN SINCE BEDTIME</div>
+          <div className="big">{formatKcal(foodCalories)}</div>
+          <div className="rate">Items: {metrics.foodItems}</div>
+        </div>
+        
+        <div className="stat">
           <div className="kicker">PREDICTED DAILY BURN</div>
           <div className="big">{formatKcal0(metrics.predictedDailyBurn)}</div>
           <div className="rate">24-hour projection</div>
@@ -119,12 +125,6 @@ export default function Metrics({ profile, day, activityCalories = 0, foodCalori
             {metrics.fatBurnedGrams.toFixed(1)} g
           </div>
           <div className="rate">From calorie deficit</div>
-        </div>
-        
-        <div className="stat">
-          <div className="kicker">TOTAL EATEN SINCE BEDTIME</div>
-          <div className="big">{formatKcal(foodCalories)}</div>
-          <div className="rate">Items: {metrics.foodItems}</div>
         </div>
       </div>
     </div>

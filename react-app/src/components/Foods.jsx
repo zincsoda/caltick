@@ -1,22 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
-import { readDay, saveDay } from '../lib/storage.js'
+import { useMemo, useState } from 'react'
 
-export default function Foods({ onChange }) {
-  const [day, setDay] = useState(() => readDay())
+export default function Foods({ day, onChange }) {
   const [form, setForm] = useState({ name: '', calories: 0 })
-
-  useEffect(() => { saveDay(day); onChange?.(day) }, [day, onChange])
 
   const total = useMemo(() => (day.foods || []).reduce((s, f) => s + Number(f.calories || 0), 0), [day.foods])
 
   function addFood() {
-    if (!form.name || !form.calories) return
-    setDay({ ...day, foods: [...(day.foods || []), { ...form, calories: Number(form.calories) }] })
+    if (!form.name || form.calories === '' || form.calories === null || form.calories === undefined) {
+      return
+    }
+    const newDay = { ...day, foods: [...(day.foods || []), { ...form, calories: Number(form.calories) }] }
+    onChange?.(newDay)
     setForm({ name: '', calories: 0 })
   }
 
   function removeFood(idx) {
-    setDay({ ...day, foods: day.foods.filter((_, i) => i !== idx) })
+    const newDay = { ...day, foods: day.foods.filter((_, i) => i !== idx) }
+    onChange?.(newDay)
   }
 
   return (
